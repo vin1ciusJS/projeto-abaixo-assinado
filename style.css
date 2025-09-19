@@ -1,0 +1,288 @@
+/* Importação das fontes do Google (Oswald para o cabeçalho, Montserrat para o corpo) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Oswald:wght@700&display=swap');
+
+:root {
+    --primary-color: #a10eae;
+    --secondary-color: #f4f4f4;
+    --dark-color: #333;
+    --light-color: #fff;
+    --header-bg-color: #1a1a1a;
+    --font-body: 'Montserrat', sans-serif;
+    --font-display: 'Oswald', sans-serif; /* FONTE DE DESTAQUE */
+    --success-color: #28a745;
+    --error-color: #ff0000;
+    --line-white: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background-color: var(--secondary-color);
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+header {
+    background: var(--header-bg-color);
+    color: var(--light-color);
+    padding: 3rem 0; /* Mais padding vertical */
+    text-align: center;
+}
+
+/* --- ESTILO DO LOGO FIEL À REFERÊNCIA (TAMANHO AJUSTADO) --- */
+.header-logo {
+    display: inline-block; 
+    padding-bottom: 10px; /* Reduzido de 15px */
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--line-white); 
+}
+
+.header-logo span {
+    display: block; 
+    font-family: var(--font-display); 
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--light-color);
+    line-height: 1.1; /* Levemente aumentado para evitar que as letras se toquem */
+}
+
+.logo-line-1 {
+    font-size: 1.2rem;   /* Reduzido de 1.8rem */
+    letter-spacing: 4px; 
+    margin-bottom: 2px;
+}
+
+.logo-line-2 {
+    font-size: 4rem;     /* << PRINCIPAL MUDANÇA: Reduzido de 6rem */
+    letter-spacing: -2px; 
+}
+
+.logo-line-3 {
+    font-family: var(--font-body); 
+    font-size: 1rem;     /* Reduzido de 1.2rem */
+    font-weight: 400;
+    text-transform: none; 
+    letter-spacing: 0.5px;
+    margin-top: 10px;    /* Reduzido de 15px */
+}
+
+.header-subtitle {
+    font-size: 1.1rem;
+    font-weight: 400;
+    opacity: 0.8;
+    color: var(--light-color);
+    max-width: 600px;
+    margin: 0 auto; /* Centraliza o subtítulo */
+    line-height: 1.4;
+}
+/* --- FIM DO ESTILO DO LOGO --- */
+
+main section {
+    background: var(--light-color);
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.info-section {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.counter {
+    text-align: center;
+    flex: 1;
+    min-width: 150px;
+}
+
+.counter p {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.counter #signature-count {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--primary-color);
+}
+
+.progress-bar {
+    width: 100%;
+    background: #e0e0e0;
+    border-radius: 10px;
+    margin: 15px 0;
+    overflow: hidden;
+    height: 18px;
+}
+
+.progress {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 10px;
+    transition: width 0.6s ease-in-out;
+}
+
+.goal {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #666;
+}
+
+.arguments {
+    flex: 2;
+}
+
+.arguments h2 {
+    margin-top: 0;
+    color: var(--dark-color);
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.arguments ul {
+    list-style: none;
+    padding: 0;
+}
+
+.arguments ul li {
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+}
+
+.form-section h2, .share-section h2 {
+    text-align: center;
+    color: var(--dark-color);
+    font-size: 2rem;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: flex-start;
+    margin: 25px 0;
+}
+
+.form-group-checkbox input[type="checkbox"] {
+    margin-right: 12px;
+    margin-top: 4px;
+    min-width: 18px;
+    min-height: 18px;
+    cursor: pointer;
+}
+
+.form-group-checkbox label {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #444;
+}
+
+.cta-button {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--light-color);
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#form-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.15rem;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.share-section {
+    text-align: center;
+    padding: 30px;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 30px;
+    margin: 8px;
+    border-radius: 8px;
+    color: var(--light-color);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.whatsapp { background-color: #25D366; }
+.facebook { background-color: #1877F2; }
+
+footer {
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+    color: #999;
+    font-size: 0.9rem;
+    background-color: #222;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media(max-width: 768px) {
+    .logo-line-1 {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+    }
+    .logo-line-2 {
+        font-size: 3.5rem; /* Nome menor para caber em telas pequenas */
+    }
+    .logo-line-3 {
+        font-size: 1rem;
+    }
+    
+    .header-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .info-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .arguments {
+        margin-top: 20px;
+    }
+}

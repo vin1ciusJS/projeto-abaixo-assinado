@@ -1,0 +1,8 @@
+{
+  "name": "projeto-abaixo-assinado",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.33.1"
+  }
+}
