@@ -1,288 +1,400 @@
-/* Importação das fontes do Google (Oswald para o cabeçalho, Montserrat para o corpo) */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Oswald:wght@700&display=swap');
 
 :root {
-    --primary-color: #a10eae;
-    --secondary-color: #f4f4f4;
-    --dark-color: #333;
-    --light-color: #fff;
-    --header-bg-color: #1a1a1a;
+    --psol-red: #ED1C24;
+    --psol-yellow: #F7DF1E;
+    --psol-purple: #6A3186;
+    --color-bg: #FDFDFD;
+    --color-text: #1A1A1A;
     --font-body: 'Montserrat', sans-serif;
-    --font-display: 'Oswald', sans-serif; /* FONTE DE DESTAQUE */
-    --success-color: #28a745;
-    --error-color: #ff0000;
-    --line-white: #ffffff;
+    --font-display: 'Oswald', sans-serif;
 }
 
-body {
-    margin: 0;
-    font-family: var(--font-body);
-    background-color: var(--secondary-color);
-    color: var(--dark-color);
-    line-height: 1.6;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background-color: var(--color-bg); color: var(--color-text); -webkit-font-smoothing: antialiased; }
+.container { max-width: 1100px; margin: auto; padding: 0 20px; }
+.section-title { font-family: var(--font-display); font-size: 3rem; text-transform: uppercase; text-align: center; margin-bottom: 50px; line-height: 1.2; }
+
+/* --- NAVBAR --- */
+.navbar { padding: 15px 0; position: fixed; top: 0; width: 100%; z-index: 1000; background-color: var(--color-bg); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.navbar-content { display: flex; justify-content: space-between; align-items: center; }
+/* --- ESTILO FINAL E DEFINITIVO DO LOGO ANIMADO --- */
+.navbar-brand { 
+    text-decoration: none; 
+    display: flex; 
+    align-items: center;
 }
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    padding: 0 20px;
-}
-
-header {
-    background: var(--header-bg-color);
-    color: var(--light-color);
-    padding: 3rem 0; /* Mais padding vertical */
-    text-align: center;
-}
-
-/* --- ESTILO DO LOGO FIEL À REFERÊNCIA (TAMANHO AJUSTADO) --- */
-.header-logo {
-    display: inline-block; 
-    padding-bottom: 10px; /* Reduzido de 15px */
-    margin-bottom: 25px;
-    border-bottom: 2px solid var(--line-white); 
-}
-
-.header-logo span {
-    display: block; 
-    font-family: var(--font-display); 
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--light-color);
-    line-height: 1.1; /* Levemente aumentado para evitar que as letras se toquem */
-}
-
-.logo-line-1 {
-    font-size: 1.2rem;   /* Reduzido de 1.8rem */
-    letter-spacing: 4px; 
-    margin-bottom: 2px;
-}
-
-.logo-line-2 {
-    font-size: 4rem;     /* << PRINCIPAL MUDANÇA: Reduzido de 6rem */
-    letter-spacing: -2px; 
-}
-
-.logo-line-3 {
-    font-family: var(--font-body); 
-    font-size: 1rem;     /* Reduzido de 1.2rem */
-    font-weight: 400;
-    text-transform: none; 
-    letter-spacing: 0.5px;
-    margin-top: 10px;    /* Reduzido de 15px */
-}
-
-.header-subtitle {
-    font-size: 1.1rem;
-    font-weight: 400;
-    opacity: 0.8;
-    color: var(--light-color);
-    max-width: 600px;
-    margin: 0 auto; /* Centraliza o subtítulo */
-    line-height: 1.4;
-}
-/* --- FIM DO ESTILO DO LOGO --- */
-
-main section {
-    background: var(--light-color);
-    margin: 20px auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-.info-section {
+.final-logo {
     display: flex;
-    gap: 30px;
-    align-items: flex-start;
+    align-items: center;
+    gap: 12px; /* Espaço entre o ícone e o texto */
 }
 
-.counter {
-    text-align: center;
-    flex: 1;
-    min-width: 150px;
+/* O container dos ícones */
+.logo-icon-wrapper {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    font-size: 1.8rem; /* Controla o tamanho dos dois ícones */
 }
 
-.counter p {
-    margin: 0 0 5px 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.counter #signature-count {
-    font-size: 3.5rem;
-    font-weight: 900;
-    color: var(--primary-color);
-}
-
-.progress-bar {
+/* Estilo para AMBOS os ícones */
+.logo-icon-wrapper i {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    background: #e0e0e0;
-    border-radius: 10px;
-    margin: 15px 0;
-    overflow: hidden;
-    height: 18px;
-}
-
-.progress {
     height: 100%;
-    background: var(--primary-color);
-    border-radius: 10px;
-    transition: width 0.6s ease-in-out;
-}
-
-.goal {
-    font-weight: bold;
-    font-size: 1rem;
-    color: #666;
-}
-
-.arguments {
-    flex: 2;
-}
-
-.arguments h2 {
-    margin-top: 0;
-    color: var(--dark-color);
-    font-size: 1.8rem;
-    font-weight: 700;
-}
-
-.arguments ul {
-    list-style: none;
-    padding: 0;
-}
-
-.arguments ul li {
-    margin-bottom: 12px;
-    font-size: 1.05rem;
-}
-
-.form-section h2, .share-section h2 {
-    text-align: center;
-    color: var(--dark-color);
-    font-size: 2rem;
-    margin-bottom: 25px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    font-size: 1rem;
-    color: #555;
-}
-
-.form-group input[type="text"],
-.form-group input[type="email"] {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 1rem;
-}
-
-.form-group-checkbox {
     display: flex;
-    align-items: flex-start;
-    margin: 25px 0;
-}
-
-.form-group-checkbox input[type="checkbox"] {
-    margin-right: 12px;
-    margin-top: 4px;
-    min-width: 18px;
-    min-height: 18px;
-    cursor: pointer;
-}
-
-.form-group-checkbox label {
-    font-size: 0.95rem;
-    line-height: 1.4;
-    color: #444;
-}
-
-.cta-button {
-    display: block;
-    width: 100%;
-    padding: 18px;
-    font-size: 1.3rem;
-    font-weight: 900;
-    color: var(--light-color);
-    background-color: var(--primary-color);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#form-message {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 1.15rem;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.share-section {
-    text-align: center;
-    padding: 30px;
-}
-
-.share-button {
-    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 30px;
-    margin: 8px;
-    border-radius: 8px;
-    color: var(--light-color);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Ícone da lixeira fechada (visível por padrão) */
+.icon-closed {
+    color: var(--color-text);
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Ícone da lixeira aberta (escondido por padrão) */
+.icon-open {
+    color: var(--color-text);
+    opacity: 0;
+    transform: scale(0.8) translateY(5px); /* Começa menor e um pouco para baixo */
+}
+
+
+/* --- A MÁGICA DA ANIMAÇÃO ACONTECE AQUI --- */
+
+/* Quando o mouse passa no logo... */
+.navbar-brand:hover .icon-closed {
+    opacity: 0; /* ...a lixeira fechada some */
+    transform: scale(0.8);
+}
+
+.navbar-brand:hover .icon-open {
+    opacity: 1; /* ...a lixeira aberta aparece... */
+    transform: scale(1) translateY(-3px); /* ...com um "salto" para cima. */
+}
+
+
+/* Estilos para o texto "Professor Marcilon" (mantidos) */
+.logo-text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.1;
+}
+
+.logo-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--color-text);
+}
+
+.logo-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: var(--color-text);
+}
+
+/* Garante que o texto dentro do logo não seja afetado pelas cores globais do tema se já estiverem definidas */
+.navbar-menu { display: flex; gap: 25px; align-items: center; }
+.nav-link { color: var(--color-text); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+.cta-nav { background-color: var(--psol-red); color: white; padding: 8px 16px; border-radius: 50px; transition: transform 0.2s ease; }
+.cta-nav:hover { transform: scale(1.05); }
+
+/* --- HERO --- */
+.hero { padding: 150px 0 100px 0; text-align: center; background-color: var(--psol-yellow); }
+.hero-title { font-family: var(--font-display); font-size: 6vw; text-transform: uppercase; line-height: 1; text-shadow: 2px 2px 0 white, 4px 4px 0 rgba(0,0,0,0.1); }
+.hero-title span { display: block; }
+.hero-subtitle { font-size: 1.2rem; max-width: 600px; margin: 30px auto 40px; }
+.cta-button {
+    display: inline-block; padding: 18px 40px; font-family: var(--font-display); font-size: 1.2rem;
+    font-weight: 700; color: var(--color-text); background: white;
+    border: 3px solid var(--color-text); border-radius: 50px; text-decoration: none; text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+.cta-button:hover { background: var(--psol-red); color: white; border-color: var(--psol-red); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+/* --- MARQUEE --- */
+.marquee { background-color: var(--psol-red); color: white; padding: 15px 0; overflow: hidden; white-space: nowrap; }
+.marquee-content { display: inline-block; animation: marquee 30s linear infinite; }
+.marquee-content span { font-family: var(--font-display); font-size: 1.5rem; margin: 0 20px; text-transform: uppercase; }
+.marquee .star { color: var(--psol-yellow); }
+
+/* --- GOAL SECTION --- */
+.goal-section { padding: 80px 0; background-color: var(--color-bg); }
+.goal-content { display: flex; align-items: center; justify-content: space-between; gap: 60px; }
+.goal-text { flex: 1.5; }
+.goal-text .section-title { text-align: left; }
+.goal-text > p { font-size: 1.1rem; color: #555; margin-bottom: 30px; }
+.about-card { display: flex; align-items: center; gap: 20px; }
+/* CÓDIGO NOVO E CORRETO (80px) */
+.about-image {
+    width: 80px;  /* Tamanho fixo, como você pediu */
+    height: 80px; /* Tamanho fixo, como você pediu */
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    flex-shrink: 0; /* Impede que a imagem encolha ou estique */
+}
+
+body.dark-mode .about-image {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem preencha o círculo sem distorcer */
+}
+.about-text h4 { font-family: var(--font-display); font-size: 1.5rem; }
+.goal-progress { flex: 1; display: flex; flex-direction: column; align-items: center; }
+.progress-circle-container { position: relative; }
+.progress-ring { transform: scaleX(-1) rotate(90deg); } /* Inverte e gira para efeito anti-horário */
+.progress-ring__bg { stroke: #e0e0e0; stroke-width: 20; fill: transparent; }
+.progress-ring__circle { stroke: var(--psol-red); stroke-width: 20; fill: transparent; stroke-linecap: round; transition: stroke-dashoffset 1s ease-out; }
+.progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+.progress-text span { font-family: var(--font-display); font-size: 4.5rem; }
+.progress-text p { font-weight: 700; text-transform: uppercase; font-size: 1rem; color: #555; }
+.goal-meta-text { font-weight: 700; margin-top: 20px; font-size: 1.2rem; }
+
+/* --- PROBLEM SECTION (COM EFEITO 3D) --- */
+.problem-section { 
+    padding: 80px 0; 
+    background-color: var(--psol-purple); 
+    color: white; 
+    clip-path: polygon(0 5%, 100% 0, 100% 95%, 0% 100%); 
+    perspective: 1000px; /* Ativa o "ambiente" 3D para os elementos filhos */
+}
+.problem-section .section-title { 
+    color: white; 
+}
+.problem-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 30px; 
+}
+.problem-card { 
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    padding: 30px; 
+    border-radius: 12px; 
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform-style: preserve-3d; /* Permite que os filhos tenham posição 3D */
+    transition: transform 0.4s ease-out, box-shadow 0.4s ease-out; /* Suaviza o retorno ao estado normal */
+}
+
+/* O card não tem mais um :hover direto, o JS vai controlar a animação */
+
+.problem-card h3 { 
+    font-family: var(--font-display); 
+    font-size: 1.5rem; 
+    color: var(--psol-yellow); 
+    text-transform: uppercase; 
+    margin-bottom: 15px; 
+    transform: translateZ(30px); /* Faz o título "flutuar" 30px à frente do card */
+}
+
+.problem-card p {
+    color: #E0E0E0;
+    transform: translateZ(20px); /* Faz o parágrafo "flutuar" 20px à frente */
+}
+
+/* --- FORM SECTION --- */
+.form-section { padding: 100px 0; }
+.form-container { max-width: 800px; margin: auto; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+.form-group label { display: block; font-weight: 700; margin-bottom: 8px; }
+.form-group input { width: 100%; padding: 14px; border-radius: 8px; font-size: 1rem; border: 2px solid #ccc; }
+.form-group input:focus { border-color: var(--psol-red); outline: none; }
+.form-group-checkbox { display: flex; align-items: center; gap: 10px; margin: 25px 0; }
+
+/* --- MODAL --- */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+.modal-overlay.visible { opacity: 1; pointer-events: all; }
+.modal-content { background: white; padding: 40px; border-radius: 12px; text-align: center; max-width: 500px; border-top: 10px solid var(--psol-yellow); }
+.modal-title { font-family: var(--font-display); font-size: 2rem; color: var(--psol-red); margin-bottom: 15px; }
+.modal-text { color: #555; margin-bottom: 30px; }
+.modal-share-buttons { display: flex; flex-direction: column; gap: 15px; }
+.share-button { display: block; padding: 14px; border-radius: 8px; text-decoration: none; color: white; font-weight: 700; }
 .whatsapp { background-color: #25D366; }
-.facebook { background-color: #1877F2; }
+.close-modal-button { background: none; border: 2px solid #ccc; color: #555; padding: 10px 20px; border-radius: 5px; margin-top: 30px; cursor: pointer; }
 
-footer {
-    text-align: center;
-    padding: 25px;
-    margin-top: 40px;
-    color: #999;
-    font-size: 0.9rem;
-    background-color: #222;
+/* --- FOOTER (VERSÃO FINAL CORRIGIDA - DESIGN ANTIGO + NOVOS ELEMENTOS) --- */
+#page-footer { 
+    padding: 50px 20px !important;
+    /* RESTAURANDO O DESIGN "TOP" DE ALTO CONTRASTE */
+    background-color: #1A1A1A !important; 
+    color: #FDFDFD !important;             
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* --- RESPONSIVIDADE --- */
+/* Regras para o Tema Escuro */
+body.dark-mode #page-footer {
+    background-color: #FDFDFD !important;
+    color: #1A1A1A !important;
+}
+
+#page-footer .footer-wrapper {
+    max-width: 1100px;
+    margin: auto;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important; /* Alinha verticalmente no centro */
+    flex-wrap: wrap !important;
+    gap: 30px !important;
+}
+
+#page-footer .footer-column {
+    text-align: left !important;
+}
+
+/* Coluna 1: Principal */
+#page-footer .footer-main {
+    flex-grow: 1;
+}
+#page-footer .footer-main p {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: inherit !important; /* Herda a cor principal do footer (branca ou preta) */
+}
+#page-footer .footer-main strong {
+    color: var(--psol-red) !important;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+}
+#page-footer .footer-credit {
+    font-size: 0.8rem !important;
+    margin-top: 10px !important;
+    color: #999999 !important; /* Cor cinza para o crédito */
+}
+#page-footer .footer-credit a {
+    color: #999999 !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+}
+#page-footer .footer-credit a:hover {
+    color: var(--psol-red) !important;
+}
+
+/* Título para as outras colunas */
+#page-footer .footer-subtitle {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 0.9rem !important;
+    margin-bottom: 15px !important;
+    color: inherit !important; /* Herda a cor principal do footer */
+}
+
+/* Coluna 2: Redes Sociais */
+#page-footer .social-icons {
+    display: flex !important;
+    gap: 15px !important;
+}
+#page-footer .social-icons a {
+    color: #999999 !important; /* Ícones em cinza para não chamarem mais atenção que o texto */
+    font-size: 1.8rem !important;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+#page-footer .social-icons a:hover {
+    color: var(--psol-red) !important;
+    transform: translateY(-3px);
+}
+
+/* Coluna 3: Apoiadores */
+#page-footer .supporter-logos {
+    display: flex !important;
+    align-items: center !important;
+    gap: 25px !important;
+}
+#page-footer .supporter-logos img {
+    height: 35px !important; /* Altura um pouco menor para logos de apoio */
+    width: auto !important;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+    /* Filtro para deixar logos brancos no tema claro (fundo escuro) */
+    filter: brightness(0) invert(1);
+}
+#page-footer .supporter-logos img:hover {
+    opacity: 1;
+}
+
+/* Ajuste do filtro dos logos no tema escuro (fundo claro) */
+body.dark-mode #page-footer .supporter-logos img {
+    filter: none; /* Remove o filtro, mostrando a cor original no fundo claro */
+}
+
+#page-footer .footer-supporters {
+    margin-left: 60px !important; /* EMPURRA A COLUNA PARA A DIREITA */
+}
+
+/* --- ESTILO ADICIONAL PARA O LOGO NO RODAPÉ --- */
+
+/* Seleciona o logo especificamente no rodapé */
+#page-footer .footer-brand {
+    display: inline-block; /* Garante que o link não ocupe a largura toda */
+    margin-bottom: 15px; /* Espaço entre o logo e o crédito "Powered by" */
+}
+
+/* Aumenta um pouco o tamanho geral do logo no rodapé para dar mais destaque */
+#page-footer .final-logo {
+    transform: scale(1.1); /* Deixa o logo 10% maior */
+    transform-origin: left; /* Garante que ele cresça a partir da esquerda */
+}
+
+#page-footer .navbar-brand:hover .final-logo {
+    transform: scale(1.15); /* Aumenta um pouco mais no hover */
+}
+
+/* --- DEIXA O LOGO DO RODAPÉ TOTALMENTE BRANCO/PRETO (VERSÃO CORRIGIDA) --- */
+
+/* Força todos os elementos de texto e ícones dentro do logo no rodapé
+   a usarem a variável --color-bg, que é branca no tema claro e preta no tema escuro. */
+#page-footer .final-logo,
+#page-footer .final-logo i,
+#page-footer .logo-title,
+#page-footer .logo-name {
+    color: var(--color-bg) !important; /* CORREÇÃO APLICADA AQUI */
+}
+
+/* Garante que o ícone de 'proibido' na animação também use a cor correta */
+#page-footer .logo-icon-wrapper::after {
+    color: var(--color-bg) !important; /* CORREÇÃO APLICADA AQUI */
+    opacity: 0.7; 
+}
+
+#page-footer .navbar-brand:hover .logo-icon-wrapper::after {
+    opacity: 1;
+}
+
+/* Responsividade do Footer */
+@media(max-width: 992px) {
+    #page-footer .footer-wrapper {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    #page-footer .footer-column {
+        text-align: center !important;
+    }
+}
+
+/* --- ANIMAÇÕES E RESPONSIVIDADE --- */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media(max-width: 768px) {
-    .logo-line-1 {
-        font-size: 1.2rem;
-        letter-spacing: 3px;
-    }
-    .logo-line-2 {
-        font-size: 3.5rem; /* Nome menor para caber em telas pequenas */
-    }
-    .logo-line-3 {
-        font-size: 1rem;
-    }
-    
-    .header-subtitle {
-        font-size: 0.95rem;
-    }
-
-    .info-section {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .arguments {
-        margin-top: 20px;
-    }
+    .section-title, .hero-title { font-size: 2.5rem; }
+    .navbar-menu { display: none; }
+    .goal-content { flex-direction: column; }
+    .problem-section { clip-path: none; }
+    .form-grid { grid-template-columns: 1fr; }
 }
