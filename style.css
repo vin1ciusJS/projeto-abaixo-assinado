@@ -398,3 +398,62 @@ body.dark-mode #page-footer .supporter-logos img {
     .problem-section { clip-path: none; }
     .form-grid { grid-template-columns: 1fr; }
 }
+
+/* --- ESTILOS PARA A PÁGINA DE IMPRESSÃO E PDF --- */
+
+/* Estilos da tela de login */
+.admin-page { background-color: var(--color-surface); text-align: center; padding-top: 50px; }
+#password-gate { background: var(--color-bg); max-width: 400px; margin: auto; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+#password-gate input { width: 100%; padding: 10px; margin: 10px 0; }
+#password-gate button { padding: 10px 20px; }
+
+/* Estilos da tabela na tela */
+#signatures-table { width: 100%; margin-top: 20px; border-collapse: collapse; background-color: var(--color-bg); }
+#signatures-table th, #signatures-table td { border: 1px solid var(--color-border); padding: 8px; text-align: left; }
+#signatures-table th { background-color: var(--color-surface); }
+
+/* ESTILOS QUE SÓ APLICAM NA HORA DE IMPRIMIR (A MÁGICA DO PDF) */
+@media print {
+    body, .admin-page { background: white !important; color: black !important; }
+    
+    /* Esconde o que não deve aparecer no PDF */
+    #password-gate, .controls, .navbar {
+        display: none !important;
+    }
+
+    /* Garante que a área de conteúdo ocupe toda a página */
+    #content-area {
+        display: block !important;
+    }
+
+    /* Estilos do cabeçalho do documento */
+    .print-header { text-align: center; margin-bottom: 2cm; }
+    .print-header h1 { font-size: 20pt; }
+    .print-header h2 { font-size: 16pt; font-weight: normal; }
+    .print-header p { font-size: 11pt; text-align: justify; margin-top: 1cm; }
+
+    /* Estilos da tabela no PDF */
+    #signatures-table { font-size: 9pt; width: 100%; }
+    #signatures-table th, #signatures-table td { border: 1px solid #ccc; padding: 5px; }
+
+    /* Evita que uma linha da tabela quebre entre duas páginas */
+    tr { page-break-inside: avoid; }
+
+    /* Estilos do rodapé com número de página */
+    .print-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 8pt;
+    }
+    .print-footer .page-number::before {
+        counter-increment: page;
+        content: "Página " counter(page);
+    }
+    @page {
+        margin: 2cm; /* Margens da página A4 */
+        counter-reset: page; /* Inicia o contador de páginas */
+    }
+}

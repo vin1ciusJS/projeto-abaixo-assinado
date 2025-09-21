@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imprimir Abaixo-Assinado - Painel Administrativo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+
+    <div id="password-gate">
+        <h2>Acesso Restrito</h2>
+        <p>Esta é uma área administrativa. Por favor, insira a senha para continuar.</p>
+        <input type="password" id="admin-password" placeholder="Senha">
+        <button id="login-button">Entrar</button>
+        <p id="error-message" style="color: red;"></p>
+    </div>
+
+    <div id="content-area" style="display: none;">
+        <header class="print-header">
+            <div class="header-logo">
+                </div>
+            <h1>Abaixo-Assinado pela Revogação da Taxa de Lixo</h1>
+            <h2>Valparaíso de Goiás</h2>
+            <p>Os cidadãos abaixo-assinados, residentes e domiciliados em Valparaíso de Goiás, solicitam a revogação da lei que instituiu a Taxa de Coleta, Manuseio e Destinação de Resíduos Sólidos Urbanos.</p>
+        </header>
+        
+        <div class="controls">
+            <button id="load-button">Carregar Assinaturas</button>
+            <button id="print-button" style="display: none;">Imprimir para PDF</button>
+            <p id="status"></p>
+        </div>
+        
+        <table id="signatures-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome Completo</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+
+        <footer class="print-footer">
+            <span class="page-number"></span>
+            <p>Gerado em: <span id="generation-date"></span></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordGate = document.getElementById('password-gate');
+            const contentArea = document.getElementById('content-area');
+            const passwordInput = document.getElementById('admin-password');
+            const loginButton = document.getElementById('login-button');
+            const errorMessage = document.getElementById('error-message');
+            const SECRET_KEY = 'ValparaisoForte2025'; // A mesma senha do backend
+
+            loginButton.addEventListener('click', () => {
+                if (passwordInput.value === SECRET_KEY) {
+                    passwordGate.style.display = 'none';
+                    contentArea.style.display = 'block';
+                } else {
+                    errorMessage.textContent = 'Senha incorreta.';
+                }
+            });
+
+            const loadButton = document.getElementById('load-button');
+            const printButton = document.getElementById('print-button');
+            const statusEl = document.getElementById('status');
+            const tableBody = document.querySelector('#signatures-table tbody');
+
+            loadButton.addEventListener('click', async () => {
+                statusEl.textContent = 'Carregando...';
+                loadButton.disabled = true;
+
+                try {
+                    const response = await fetch('/api/getSignatures', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ secret: SECRET_KEY })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Não foi possível buscar os dados.');
+                    }
+
+                    const signatures = await response.json();
+                    
+                    tableBody.innerHTML = ''; // Limpa a tabela antes de preencher
+                    signatures.forEach((sig, index) => {
+                        const row = `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${sig.nome}</td>
+                                <td>${sig.endereco}</td>
+                                <td>${sig.telefone}</td>
+                                <td>${sig.email}</td>
+                            </tr>
+                        `;
+                        tableBody.innerHTML += row;
+                    });
+                    
+                    statusEl.textContent = `${signatures.length} assinaturas carregadas com sucesso.`;
+                    printButton.style.display = 'inline-block';
+
+                } catch (error) {
+                    statusEl.textContent = `Erro: ${error.message}`;
+                    loadButton.disabled = false;
+                }
+            });
+
+            printButton.addEventListener('click', () => {
+                document.getElementById('generation-date').textContent = new Date().toLocaleDateString('pt-BR', { dateStyle: 'long' });
+                window.print();
+            });
+        });
+    </script>
+
+</body>
+</html>
