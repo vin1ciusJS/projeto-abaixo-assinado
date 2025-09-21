@@ -399,61 +399,132 @@ body.dark-mode #page-footer .supporter-logos img {
     .form-grid { grid-template-columns: 1fr; }
 }
 
-/* --- ESTILOS PARA A PÁGINA DE IMPRESSÃO E PDF --- */
+/* --- ESTILOS PARA O PAINEL DE CONTROLE E PDF "BONITÃO" --- */
 
-/* Estilos da tela de login */
-.admin-page { background-color: var(--color-surface); text-align: center; padding-top: 50px; }
-#password-gate { background: var(--color-bg); max-width: 400px; margin: auto; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-#password-gate input { width: 100%; padding: 10px; margin: 10px 0; }
-#password-gate button { padding: 10px 20px; }
+/* Estilo do corpo da página de admin */
+.admin-page-body {
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+}
 
-/* Estilos da tabela na tela */
-#signatures-table { width: 100%; margin-top: 20px; border-collapse: collapse; background-color: var(--color-bg); }
-#signatures-table th, #signatures-table td { border: 1px solid var(--color-border); padding: 8px; text-align: left; }
-#signatures-table th { background-color: var(--color-surface); }
+/* Caixa de Senha */
+.password-gate-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.password-box {
+    background-color: var(--color-bg);
+    max-width: 400px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.password-box .fa-lock { font-size: 2rem; color: var(--psol-yellow); margin-bottom: 15px; }
+.password-box h2 { color: var(--color-text-primary); margin-bottom: 10px; }
+.password-box p { margin-bottom: 20px; }
+.password-box input { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; text-align: center; }
+.error-text { margin-top: 10px; height: 1em; }
 
-/* ESTILOS QUE SÓ APLICAM NA HORA DE IMPRIMIR (A MÁGICA DO PDF) */
+/* Botões do Painel */
+.admin-cta-button {
+    background-color: var(--psol-red);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.admin-cta-button:hover { background-color: #333; transform: translateY(-2px); }
+.admin-cta-button.secondary { background-color: #555; }
+
+/* Layout do Dashboard */
+.admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+.sidebar {
+    width: 260px;
+    background-color: var(--color-bg);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--color-border);
+}
+.sidebar-logo { margin-bottom: 40px; }
+.sidebar-nav .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    margin: 5px 0;
+    border-radius: 8px;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.sidebar-nav .nav-item:hover { background-color: var(--color-surface); color: var(--color-text-primary); }
+.sidebar-nav .nav-item.active { background-color: var(--psol-red); color: white; }
+
+/* Conteúdo Principal do Painel */
+.main-content { flex: 1; padding: 40px; }
+.main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.main-header h1 { font-family: var(--font-display); color: var(--color-text-primary); }
+.status-text { min-height: 1.5em; color: var(--color-text-primary); }
+.table-container { background-color: var(--color-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+#signatures-table { width: 100%; border-collapse: collapse; }
+#signatures-table th, #signatures-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--color-border); }
+#signatures-table th { font-family: var(--font-display); text-transform: uppercase; font-size: 0.8rem; background-color: var(--color-surface); }
+#signatures-table tbody tr:hover { background-color: var(--color-surface); }
+
+
+/* --- ESTILOS "BONITÕES" PARA O PDF GERADO --- */
 @media print {
-    body, .admin-page { background: white !important; color: black !important; }
+    /* Reseta o corpo e esconde o que não é para imprimir */
+    body, .admin-page-body { background: white !important; color: black !important; font-family: 'Times New Roman', serif; }
+    #password-gate, .admin-dashboard { display: none !important; }
+
+    /* Mostra o container do PDF */
+    #pdf-content { display: block !important; }
+
+    /* Cabeçalho do PDF */
+    .pdf-header { display: flex; align-items: center; gap: 20px; border-bottom: 2px solid black; padding-bottom: 15px; }
+    .pdf-logo { font-family: var(--font-display); text-transform: uppercase; line-height: 1; }
+    .pdf-logo .brand-line-1 { font-size: 10pt; }
+    .pdf-logo .brand-line-2 { font-size: 18pt; color: var(--psol-red); }
+    .pdf-title { text-align: center; flex-grow: 1; }
+    .pdf-title h1 { font-size: 16pt; margin: 0; }
+    .pdf-title h2 { font-size: 12pt; font-weight: normal; margin: 0; }
     
-    /* Esconde o que não deve aparecer no PDF */
-    #password-gate, .controls, .navbar {
-        display: none !important;
-    }
+    /* Texto da Petição */
+    .pdf-petition-text { margin: 1.5cm 0; font-size: 11pt; text-align: justify; line-height: 1.5; }
 
-    /* Garante que a área de conteúdo ocupe toda a página */
-    #content-area {
-        display: block !important;
-    }
+    /* Tabela no PDF */
+    #pdf-table-container table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+    #pdf-table-container th, #pdf-table-container td { border: 1px solid #ccc; padding: 6px 8px; }
+    #pdf-table-container th { background-color: #f2f2f2; font-weight: bold; }
+    #pdf-table-container tr:nth-child(even) { background-color: #f9f9f9; }
+    tr { page-break-inside: avoid; } /* Evita que uma linha quebre entre páginas */
 
-    /* Estilos do cabeçalho do documento */
-    .print-header { text-align: center; margin-bottom: 2cm; }
-    .print-header h1 { font-size: 20pt; }
-    .print-header h2 { font-size: 16pt; font-weight: normal; }
-    .print-header p { font-size: 11pt; text-align: justify; margin-top: 1cm; }
-
-    /* Estilos da tabela no PDF */
-    #signatures-table { font-size: 9pt; width: 100%; }
-    #signatures-table th, #signatures-table td { border: 1px solid #ccc; padding: 5px; }
-
-    /* Evita que uma linha da tabela quebre entre duas páginas */
-    tr { page-break-inside: avoid; }
-
-    /* Estilos do rodapé com número de página */
-    .print-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        text-align: center;
-        font-size: 8pt;
-    }
-    .print-footer .page-number::before {
-        counter-increment: page;
-        content: "Página " counter(page);
-    }
+    /* Rodapé do PDF */
+    .pdf-footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-size: 8pt; color: #555; }
+    .pdf-footer p { margin: 0; }
+    .pdf-footer .page-number::after { counter-increment: page; content: "Página " counter(page); }
+    
+    /* Configurações da página A4 */
     @page {
-        margin: 2cm; /* Margens da página A4 */
-        counter-reset: page; /* Inicia o contador de páginas */
+        size: A4;
+        margin: 2cm;
+        counter-reset: page;
     }
 }

@@ -3,53 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imprimir Abaixo-Assinado - Painel Administrativo</title>
+    <title>Painel de Controle - Abaixo-assinado</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body class="admin-page">
+<body class="admin-page-body">
 
-    <div id="password-gate">
-        <h2>Acesso Restrito</h2>
-        <p>Esta é uma área administrativa. Por favor, insira a senha para continuar.</p>
-        <input type="password" id="admin-password" placeholder="Senha">
-        <button id="login-button">Entrar</button>
-        <p id="error-message" style="color: red;"></p>
-    </div>
-
-    <div id="content-area" style="display: none;">
-        <header class="print-header">
-            <div class="header-logo">
-                </div>
-            <h1>Abaixo-Assinado pela Revogação da Taxa de Lixo</h1>
-            <h2>Valparaíso de Goiás</h2>
-            <p>Os cidadãos abaixo-assinados, residentes e domiciliados em Valparaíso de Goiás, solicitam a revogação da lei que instituiu a Taxa de Coleta, Manuseio e Destinação de Resíduos Sólidos Urbanos.</p>
-        </header>
-        
-        <div class="controls">
-            <button id="load-button">Carregar Assinaturas</button>
-            <button id="print-button" style="display: none;">Imprimir para PDF</button>
-            <p id="status"></p>
+    <div id="password-gate" class="password-gate-container">
+        <div class="password-box">
+            <i class="fa-solid fa-lock"></i>
+            <h2>Acesso Restrito</h2>
+            <p>Insira a senha do painel para gerar o relatório de assinaturas.</p>
+            <input type="password" id="admin-password" placeholder="••••••••••">
+            <button id="login-button" class="admin-cta-button">Acessar Painel</button>
+            <p id="error-message" class="error-text"></p>
         </div>
-        
-        <table id="signatures-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nome Completo</th>
-                    <th>Endereço</th>
-                    <th>Telefone</th>
-                    <th>E-mail</th>
-                </tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-
-        <footer class="print-footer">
-            <span class="page-number"></span>
-            <p>Gerado em: <span id="generation-date"></span></p>
-        </footer>
     </div>
+
+    <div id="content-area" class="admin-dashboard" style="display: none;">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <span class="brand-line-1">Professor</span>
+                <span class="brand-line-2">Marcilon</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active"><i class="fa-solid fa-file-lines"></i> Relatório</a>
+                <a href="index.html" class="nav-item"><i class="fa-solid fa-arrow-left"></i> Voltar ao Site</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="main-header">
+                <h1>Relatório de Assinaturas</h1>
+                <div class="controls">
+                    <button id="load-button" class="admin-cta-button"><i class="fa-solid fa-sync"></i> Carregar Assinaturas</button>
+                    <button id="print-button" class="admin-cta-button secondary" style="display: none;"><i class="fa-solid fa-print"></i> Gerar PDF</button>
+                </div>
+            </div>
+            <p id="status" class="status-text"></p>
+            
+            <div class="table-container">
+                <table id="signatures-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome Completo</th>
+                            <th>Endereço</th>
+                            <th>Telefone</th>
+                            <th>E-mail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="pdf-content" style="display: none;">
+        <div class="pdf-header">
+            <div class="pdf-logo">
+                <span class="brand-line-1">Professor</span>
+                <span class="brand-line-2">Marcilon</span>
+            </div>
+            <div class="pdf-title">
+                <h1>ABAIXO-ASSINADO PELA REVOGAÇÃO DA TAXA DE LIXO</h1>
+                <h2>Valparaíso de Goiás</h2>
+            </div>
+        </div>
+        <div class="pdf-petition-text">
+            <p>Nós, os cidadãos abaixo-assinados, residentes e eleitores no município de Valparaíso de Goiás, em pleno gozo de nossos direitos civis, vimos por meio deste solicitar formalmente à Câmara Municipal de Vereadores a imediata revogação da Lei Municipal que instituiu a Taxa de Coleta, Manuseio e Destinação de Resíduos Sólidos Urbanos (Taxa de Lixo). A referida cobrança representa um ônus fiscal injusto e desproporcional para a população, sem a devida contrapartida na melhoria do serviço. Reivindicamos, portanto, que a gestão de resíduos seja financiada por fontes do orçamento geral do município, em respeito à capacidade contributiva dos cidadãos.</p>
+        </div>
+        <div id="pdf-table-container"></div>
+        <div class="pdf-footer">
+            <p>Documento gerado em <span id="generation-date"></span>, contendo um total de <span id="total-signatures"></span> assinaturas válidas.</p>
+            <span class="page-number"></span>
+        </div>
+    </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -58,14 +92,15 @@
             const passwordInput = document.getElementById('admin-password');
             const loginButton = document.getElementById('login-button');
             const errorMessage = document.getElementById('error-message');
-            const SECRET_KEY = 'ValparaisoForte2025'; // A mesma senha do backend
+            const SECRET_KEY = 'ValparaisoForte2025';
 
             loginButton.addEventListener('click', () => {
                 if (passwordInput.value === SECRET_KEY) {
                     passwordGate.style.display = 'none';
-                    contentArea.style.display = 'block';
+                    contentArea.style.display = 'flex'; // Usamos flex para o layout do dashboard
                 } else {
                     errorMessage.textContent = 'Senha incorreta.';
+                    passwordInput.focus();
                 }
             });
 
@@ -73,9 +108,12 @@
             const printButton = document.getElementById('print-button');
             const statusEl = document.getElementById('status');
             const tableBody = document.querySelector('#signatures-table tbody');
+            const pdfTableContainer = document.getElementById('pdf-table-container');
+            
+            let signaturesData = [];
 
             loadButton.addEventListener('click', async () => {
-                statusEl.textContent = 'Carregando...';
+                statusEl.textContent = 'Buscando dados no servidor...';
                 loadButton.disabled = true;
 
                 try {
@@ -86,27 +124,19 @@
                     });
                     
                     if (!response.ok) {
-                        throw new Error('Não foi possível buscar os dados.');
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Não foi possível buscar os dados.');
                     }
 
-                    const signatures = await response.json();
+                    signaturesData = await response.json();
                     
-                    tableBody.innerHTML = ''; // Limpa a tabela antes de preencher
-                    signatures.forEach((sig, index) => {
-                        const row = `
-                            <tr>
-                                <td>${index + 1}</td>
-                                <td>${sig.nome}</td>
-                                <td>${sig.endereco}</td>
-                                <td>${sig.telefone}</td>
-                                <td>${sig.email}</td>
-                            </tr>
-                        `;
-                        tableBody.innerHTML += row;
+                    tableBody.innerHTML = '';
+                    signaturesData.forEach((sig, index) => {
+                        tableBody.innerHTML += `<tr><td>${index + 1}</td><td>${sig.nome}</td><td>${sig.endereco}</td><td>${sig.telefone}</td><td>${sig.email}</td></tr>`;
                     });
                     
-                    statusEl.textContent = `${signatures.length} assinaturas carregadas com sucesso.`;
-                    printButton.style.display = 'inline-block';
+                    statusEl.textContent = `${signaturesData.length} assinaturas carregadas.`;
+                    printButton.style.display = 'inline-flex';
 
                 } catch (error) {
                     statusEl.textContent = `Erro: ${error.message}`;
@@ -115,11 +145,19 @@
             });
 
             printButton.addEventListener('click', () => {
+                // Prepara o conteúdo para o PDF
                 document.getElementById('generation-date').textContent = new Date().toLocaleDateString('pt-BR', { dateStyle: 'long' });
+                document.getElementById('total-signatures').textContent = signaturesData.length;
+                
+                // Clona a tabela da tela para a área de impressão
+                const tableToPrint = document.getElementById('signatures-table').cloneNode(true);
+                pdfTableContainer.innerHTML = ''; // Limpa antes de adicionar
+                pdfTableContainer.appendChild(tableToPrint);
+
+                // Aciona a impressão do navegador
                 window.print();
             });
         });
     </script>
-
 </body>
 </html>
