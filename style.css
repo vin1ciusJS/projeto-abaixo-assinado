@@ -460,7 +460,17 @@ body.dark-mode #page-footer .supporter-logos img {
     flex-direction: column;
     border-right: 1px solid var(--color-border);
 }
-.sidebar-logo { margin-bottom: 40px; }
+/* Ajuste do Logo na Sidebar do Painel */
+.sidebar .navbar-brand {
+    display: block; /* Garante que o link ocupe o espaço corretamente */
+    margin-bottom: 40px; /* Mantém o espaçamento que o .sidebar-logo tinha */
+}
+
+/* Opcional: Deixa o logo um pouco maior na sidebar para preencher melhor o espaço */
+.sidebar .final-logo {
+    transform: scale(1.1);
+    transform-origin: top left; /* Garante que ele cresça a partir do canto superior esquerdo */
+}
 .sidebar-nav .nav-item {
     display: flex;
     align-items: center;
