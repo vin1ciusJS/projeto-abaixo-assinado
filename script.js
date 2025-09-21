@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressRing = document.getElementById('progress-ring-circle');
     const radius = progressRing ? progressRing.r.baseVal.value : 0;
     const circumference = radius * 2 * Math.PI;
-    const GOAL = 5000;
+    const GOAL = 1000;
     if(progressRing) { progressRing.style.strokeDasharray = `${circumference} ${circumference}`; progressRing.style.strokeDashoffset = circumference; }
     function setProgress(percent) { if(progressRing) { const offset = circumference - (percent / 100) * circumference; progressRing.style.strokeDashoffset = offset; } }
     function animateCountUp(element, finalCount) { let currentCount = 0; const increment = Math.ceil(finalCount / 100) || 1; const interval = setInterval(() => { currentCount += increment; if (currentCount >= finalCount) { currentCount = finalCount; clearInterval(interval); } element.textContent = currentCount; }, 20); }
