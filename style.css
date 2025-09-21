@@ -523,8 +523,17 @@ body.dark-mode #page-footer .supporter-logos img {
     
     /* Configurações da página A4 */
     @page {
-        size: A4;
-        margin: 2cm;
-        counter-reset: page;
-    }
+            size: A4;
+            margin: 2cm; /* Mantém as margens do conteúdo principal */
+            counter-reset: page;
+
+            /* --- A MÁGICA PARA REMOVER O CABEÇALHO/RODAPÉ DO NAVEGADOR --- */
+            @top-left { content: ""; }
+            @top-center { content: ""; }
+            @top-right { content: ""; }
+            @bottom-left { content: ""; }
+            @bottom-center { content: ""; }
+            @bottom-right { content: ""; }
+            /* --- FIM DA MÁGICA --- */
+        }
 }
