@@ -91,7 +91,6 @@
         </div>
     </div>
 
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const passwordGate = document.getElementById('password-gate');
@@ -138,9 +137,10 @@
                     signaturesData = await response.json();
                     
                     tableBody.innerHTML = '';
+                    // --- CORREÇÃO APLICADA AQUI ---
                     // Preenche a tabela do painel com as colunas corretas (incluindo IP)
                     signaturesData.forEach((sig, index) => {
-                        const signatureDate = new Date(sig.data_assinatura).toLocaleString('pt-BR');
+                        const signatureDate = sig.data_assinatura ? new Date(sig.data_assinatura).toLocaleString('pt-BR') : 'N/A';
                         tableBody.innerHTML += `<tr><td>${index + 1}</td><td>${sig.nome}</td><td>${signatureDate}</td><td class="ip-column">${sig.endereco_ip || 'N/A'}</td></tr>`;
                     });
                     
@@ -175,10 +175,10 @@
                             <tr>
                                 <td>${index + 1}</td>
                                 <td>${sig.nome}</td>
-                                <td>${new Date(sig.data_assinatura).toLocaleString('pt-BR')}</td>
-                                <td>${sig.endereco}</td>
-                                <td>${sig.telefone}</td>
-                                <td>${sig.email}</td>
+                                <td>${sig.data_assinatura ? new Date(sig.data_assinatura).toLocaleString('pt-BR') : 'N/A'}</td>
+                                <td>${sig.endereco || ''}</td>
+                                <td>${sig.telefone || ''}</td>
+                                <td>${sig.email || ''}</td>
                             </tr>
                         `).join('')}
                     </tbody>
