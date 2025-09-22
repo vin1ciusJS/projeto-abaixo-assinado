@@ -1,3 +1,17 @@
+// --- LÓGICA DO LOADSCREEN DEFINITIVO ---
+const loadingScreen = document.getElementById('loading-screen');
+
+setTimeout(() => {
+    // 1. Esconde o loadscreen com um fade out
+    if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
+    }
+    // 2. Remove a classe que esconde o conteúdo principal do site
+    document.body.classList.remove('is-loading');
+
+}, 3000); // 3000 milissegundos = 3 segundos
+// --- FIM DA LÓGICA ---
+
 document.addEventListener('DOMContentLoaded', () => {
 
     /**

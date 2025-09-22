@@ -10,6 +10,112 @@
     --font-display: 'Oswald', sans-serif;
 }
 
+/* --- LOADSCREEN DEFINITIVO (SOL SE CRIANDO) --- */
+
+/* Esconde o conteúdo principal enquanto o body tiver a classe .is-loading */
+body.is-loading > header,
+body.is-loading > main,
+body.is-loading > footer,
+body.is-loading > .cookie-banner {
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* Contêiner principal do loadscreen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 1s ease-out 0.5s; /* Fade out mais lento e com delay */
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Contêiner da animação */
+.sun-animation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* SVG do Sol */
+.sun-svg {
+    width: 150px;
+    height: 150px;
+    filter: drop-shadow(0 0 15px var(--psol-yellow));
+}
+
+/* Círculo central do Sol */
+.sun-core {
+    fill: var(--psol-yellow);
+    transform-origin: center;
+    animation: scaleIn 0.8s ease-out forwards, pulse 2s ease-in-out 0.8s infinite alternate;
+}
+
+/* Raios do Sol */
+.sun-ray {
+    stroke: var(--psol-yellow);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-dasharray: 40; /* Comprimento do raio */
+    stroke-dashoffset: 40; /* Começa "invisível" */
+    animation: drawRay 1s ease-out 0.5s forwards; /* Animação de desenho */
+}
+
+/* Animação para cada raio aparecer em sequência */
+.sun-ray:nth-child(2) { animation-delay: 0.6s; }
+.sun-ray:nth-child(3) { animation-delay: 0.7s; }
+.sun-ray:nth-child(4) { animation-delay: 0.8s; }
+.sun-ray:nth-child(5) { animation-delay: 0.9s; }
+.sun-ray:nth-child(6) { animation-delay: 1.0s; }
+.sun-ray:nth-child(7) { animation-delay: 1.1s; }
+.sun-ray:nth-child(8) { animation-delay: 1.2s; }
+.sun-ray:nth-child(9) { animation-delay: 1.3s; }
+
+
+/* Texto do Logo */
+.sun-logo-text {
+    text-align: center;
+    font-family: var(--font-display);
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    opacity: 0;
+    animation: fadeInText 1s ease-out 1.8s forwards; /* Aparece depois que o sol se forma */
+}
+.sun-text-line1 { font-size: 1.2rem; font-family: var(--font-body); font-weight: 700; }
+.sun-text-line2 { font-size: 2.5rem; font-weight: 700; }
+
+/* Keyframes das animações */
+@keyframes scaleIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+@keyframes drawRay {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes pulse {
+    from { filter: drop-shadow(0 0 15px var(--psol-yellow)); }
+    to { filter: drop-shadow(0 0 25px var(--psol-yellow)); }
+}
+
+@keyframes fadeInText {
+    to { opacity: 1; }
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { font-family: var(--font-body); background-color: var(--color-bg); color: var(--color-text); -webkit-font-smoothing: antialiased; }
