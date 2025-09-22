@@ -1,6 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /**
+     * MÓDULO 0: BANNER DE CONSENTIMENTO DE COOKIES
+     * Verifica se o usuário já consentiu, mostra o banner se não,
+     * e salva o consentimento ao clicar em 'Aceitar'.
+     */
+    const cookieBanner = document.getElementById('cookie-consent-banner');
+    const acceptCookiesButton = document.getElementById('accept-cookies-button');
+
+    // Verifica no armazenamento local se o consentimento já foi dado
+    if (!localStorage.getItem('cookie_consent')) {
+        // Se não foi dado, mostra o banner com a animação
+        cookieBanner.classList.add('visible');
+    }
+
+    // Adiciona o evento de clique ao botão de aceitar
+    if (acceptCookiesButton) {
+        acceptCookiesButton.addEventListener('click', () => {
+            // Salva a informação de que o usuário consentiu
+            localStorage.setItem('cookie_consent', 'true');
+            
+            // Esconde o banner com a animação
+            cookieBanner.classList.remove('visible');
+        });
+    }
+
+    /**
      * MÓDULO 1: SELETOR DE TEMA (CLARO/ESCURO) COM MEMÓRIA
      */
     const themeToggle = document.getElementById('theme-toggle');

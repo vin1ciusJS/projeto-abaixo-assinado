@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Controle - Abaixo-assinado</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
@@ -60,9 +59,8 @@
                         <tr>
                             <th>#</th>
                             <th>Nome Completo</th>
-                            <th>Endereço</th>
-                            <th>Telefone</th>
-                            <th>E-mail</th>
+                            <th>Data / Hora</th>
+                            <th class="ip-column">IP do Assinante</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,7 +104,7 @@
             loginButton.addEventListener('click', () => {
                 if (passwordInput.value === SECRET_KEY) {
                     passwordGate.style.display = 'none';
-                    contentArea.style.display = 'flex'; // Usamos flex para o layout do dashboard
+                    contentArea.style.display = 'flex';
                 } else {
                     errorMessage.textContent = 'Senha incorreta.';
                     passwordInput.focus();
@@ -140,8 +138,10 @@
                     signaturesData = await response.json();
                     
                     tableBody.innerHTML = '';
+                    // Preenche a tabela do painel com as colunas corretas (incluindo IP)
                     signaturesData.forEach((sig, index) => {
-                        tableBody.innerHTML += `<tr><td>${index + 1}</td><td>${sig.nome}</td><td>${sig.endereco}</td><td>${sig.telefone}</td><td>${sig.email}</td></tr>`;
+                        const signatureDate = new Date(sig.data_assinatura).toLocaleString('pt-BR');
+                        tableBody.innerHTML += `<tr><td>${index + 1}</td><td>${sig.nome}</td><td>${signatureDate}</td><td class="ip-column">${sig.endereco_ip || 'N/A'}</td></tr>`;
                     });
                     
                     statusEl.textContent = `${signaturesData.length} assinaturas carregadas.`;
@@ -154,16 +154,39 @@
             });
 
             printButton.addEventListener('click', () => {
-                // Prepara o conteúdo para o PDF
                 document.getElementById('generation-date').textContent = new Date().toLocaleDateString('pt-BR', { dateStyle: 'long' });
                 document.getElementById('total-signatures').textContent = signaturesData.length;
                 
-                // Clona a tabela da tela para a área de impressão
-                const tableToPrint = document.getElementById('signatures-table').cloneNode(true);
-                pdfTableContainer.innerHTML = ''; // Limpa antes de adicionar
+                // Cria a tabela para o PDF com as colunas corretas (SEM o IP)
+                const tableToPrint = document.createElement('table');
+                tableToPrint.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome Completo</th>
+                            <th>Data / Hora da Assinatura</th>
+                            <th>Endereço</th>
+                            <th>Telefone</th>
+                            <th>E-mail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${signaturesData.map((sig, index) => `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${sig.nome}</td>
+                                <td>${new Date(sig.data_assinatura).toLocaleString('pt-BR')}</td>
+                                <td>${sig.endereco}</td>
+                                <td>${sig.telefone}</td>
+                                <td>${sig.email}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                `;
+                
+                pdfTableContainer.innerHTML = '';
                 pdfTableContainer.appendChild(tableToPrint);
 
-                // Aciona a impressão do navegador
                 window.print();
             });
         });

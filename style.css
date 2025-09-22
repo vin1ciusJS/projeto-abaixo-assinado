@@ -547,3 +547,75 @@ body.dark-mode #page-footer .supporter-logos img {
             /* --- FIM DA MÁGICA --- */
         }
 }
+
+/* --- BANNER DE CONSENTIMENTO DE COOKIES --- */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    padding: 25px 0;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    border-top: 1px solid var(--color-border);
+    z-index: 2000;
+    
+    /* Animação de entrada */
+    transform: translateY(100%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cookie-banner.visible {
+    transform: translateY(0);
+}
+
+.cookie-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.cookie-icon .fa-cookie-bite {
+    font-size: 2.5rem;
+    color: var(--psol-yellow);
+}
+
+.cookie-text {
+    flex-grow: 1;
+}
+
+.cookie-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.cookie-cta {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+    white-space: nowrap; /* Impede que o texto do botão quebre */
+}
+
+/* Responsividade do Banner */
+@media(max-width: 768px) {
+    .cookie-banner-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .cookie-text p {
+        font-size: 0.8rem;
+    }
+}
+
+/* --- AJUSTES FINAIS PARA IMPRESSÃO DE IP E DATA --- */
+
+/* Esconde a coluna de IP na impressão */
+@media print {
+    .ip-column {
+        display: none !important;
+    }
+}
