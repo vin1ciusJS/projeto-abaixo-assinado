@@ -92,107 +92,153 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const passwordGate = document.getElementById('password-gate');
-            const contentArea = document.getElementById('content-area');
-            const passwordInput = document.getElementById('admin-password');
-            const loginButton = document.getElementById('login-button');
-            const errorMessage = document.getElementById('error-message');
-            const SECRET_KEY = 'ValparaisoForte2025';
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const passwordGate = document.getElementById('password-gate');
+        const contentArea = document.getElementById('content-area');
+        const passwordInput = document.getElementById('admin-password');
+        const loginButton = document.getElementById('login-button');
+        const errorMessage = document.getElementById('error-message');
+        const SECRET_KEY = 'ValparaisoForte2025';
 
-            loginButton.addEventListener('click', () => {
-                if (passwordInput.value === SECRET_KEY) {
-                    passwordGate.style.display = 'none';
-                    contentArea.style.display = 'flex';
-                } else {
-                    errorMessage.textContent = 'Senha incorreta.';
-                    passwordInput.focus();
-                }
-            });
+        // VARIÁVEIS DOS BOTÕES DECLARADAS APENAS UMA VEZ AQUI
+        const loadButton = document.getElementById('load-button');
+        const printButton = document.getElementById('print-button');
+        const wordButton = document.getElementById('word-button');
+        const statusEl = document.getElementById('status');
+        const tableBody = document.querySelector('#signatures-table tbody');
+        const pdfTableContainer = document.getElementById('pdf-table-container');
+        
+        let signaturesData = [];
 
-            const loadButton = document.getElementById('load-button');
-            const printButton = document.getElementById('print-button');
-            const wordButton = document.getElementById('word-button');
-            const statusEl = document.getElementById('status');
-            const tableBody = document.querySelector('#signatures-table tbody');
-            const pdfTableContainer = document.getElementById('pdf-table-container');
-            
-            let signaturesData = [];
-
-            loadButton.addEventListener('click', async () => {
-                statusEl.textContent = 'Buscando dados no servidor...';
-                loadButton.disabled = true;
-
-                try {
-                    const response = await fetch('/api/getSignatures', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ secret: SECRET_KEY })
-                    });
-                    
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || 'Não foi possível buscar os dados.');
-                    }
-
-                    signaturesData = await response.json();
-                    
-                    tableBody.innerHTML = '';
-                    // --- CORREÇÃO APLICADA AQUI ---
-                    // Preenche a tabela do painel com as colunas corretas (incluindo IP)
-                    signaturesData.forEach((sig, index) => {
-                        const signatureDate = sig.data_assinatura ? new Date(sig.data_assinatura).toLocaleString('pt-BR') : 'N/A';
-                        tableBody.innerHTML += `<tr><td>${index + 1}</td><td>${sig.nome}</td><td>${signatureDate}</td><td class="ip-column">${sig.endereco_ip || 'N/A'}</td></tr>`;
-                    });
-                    
-                    statusEl.textContent = `${signaturesData.length} assinaturas carregadas.`;
-                    printButton.style.display = 'inline-flex';
-                    wordButton.style.display = 'inline-flex';
-
-                } catch (error) {
-                    statusEl.textContent = `Erro: ${error.message}`;
-                    loadButton.disabled = false;
-                }
-            });
-
-            printButton.addEventListener('click', () => {
-                document.getElementById('generation-date').textContent = new Date().toLocaleDateString('pt-BR', { dateStyle: 'long' });
-                document.getElementById('total-signatures').textContent = signaturesData.length;
-                
-                // Cria a tabela para o PDF com as colunas corretas (SEM o IP)
-                const tableToPrint = document.createElement('table');
-                tableToPrint.innerHTML = `
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nome Completo</th>
-                            <th>Data / Hora da Assinatura</th>
-                            <th>Endereço</th>
-                            <th>Telefone</th>
-                            <th>E-mail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${signaturesData.map((sig, index) => `
-                            <tr>
-                                <td>${index + 1}</td>
-                                <td>${sig.nome}</td>
-                                <td>${sig.data_assinatura ? new Date(sig.data_assinatura).toLocaleString('pt-BR') : 'N/A'}</td>
-                                <td>${sig.endereco || ''}</td>
-                                <td>${sig.telefone || ''}</td>
-                                <td>${sig.email || ''}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                `;
-                
-                pdfTableContainer.innerHTML = '';
-                pdfTableContainer.appendChild(tableToPrint);
-
-                window.print();
-            });
+        loginButton.addEventListener('click', () => {
+            if (passwordInput.value === SECRET_KEY) {
+                passwordGate.style.display = 'none';
+                contentArea.style.display = 'flex';
+            } else {
+                errorMessage.textContent = 'Senha incorreta.';
+                passwordInput.focus();
+            }
         });
-    </script>
+
+        loadButton.addEventListener('click', async () => {
+            statusEl.textContent = 'Buscando dados no servidor...';
+            loadButton.disabled = true;
+
+            try {
+                const response = await fetch('/api/getSignatures', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ secret: SECRET_KEY })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Não foi possível buscar os dados.');
+                }
+
+                signaturesData = await response.json();
+                
+                tableBody.innerHTML = '';
+                signaturesData.forEach((sig, index) => {
+                    const signatureDate = sig.data_assinatura ? new Date(sig.data_assinatura).toLocaleString('pt-BR') : 'N/A';
+                    tableBody.innerHTML += `<tr><td>${index + 1}</td><td>${sig.nome}</td><td>${signatureDate}</td><td class="ip-column">${sig.endereco_ip || 'N/A'}</td></tr>`;
+                });
+                
+                statusEl.textContent = `${signaturesData.length} assinaturas carregadas.`;
+                printButton.style.display = 'inline-flex';
+                wordButton.style.display = 'inline-flex';
+
+            } catch (error) {
+                statusEl.textContent = `Erro: ${error.message}`;
+                loadButton.disabled = false;
+            }
+        });
+
+        printButton.addEventListener('click', () => {
+            document.getElementById('generation-date').textContent = new Date().toLocaleDateString('pt-BR', { dateStyle: 'long' });
+            document.getElementById('total-signatures').textContent = signaturesData.length;
+            
+            const tableToPrint = document.createElement('table');
+            tableToPrint.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome Completo</th>
+                        <th>Data / Hora da Assinatura</th>
+                        <th>Endereço</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${signaturesData.map((sig, index) => `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${sig.nome}</td>
+                            <td>${sig.data_assinatura ? new Date(sig.data_assinatura).toLocaleString('pt-BR') : 'N/A'}</td>
+                            <td>${sig.endereco || ''}</td>
+                            <td>${sig.telefone || ''}</td>
+                            <td>${sig.email || ''}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+            
+            pdfTableContainer.innerHTML = '';
+            pdfTableContainer.appendChild(tableToPrint);
+            window.print();
+        });
+
+        // --- FUNCIONALIDADE "GERAR WORD" CORRIGIDA ---
+        if (wordButton) {
+            wordButton.addEventListener('click', () => {
+                if (signaturesData.length === 0) {
+                    alert('Por favor, clique em "Carregar Assinaturas" primeiro.');
+                    return;
+                }
+
+                let htmlString = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head><meta charset='utf-8'><title>Abaixo-Assinado</title><style>
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+                        th { background-color: #f2f2f2; }
+                    </style></head><body>
+                        <h2>Relatório de Assinaturas - Abaixo-Assinado pela Revogação da Taxa de Lixo</h2>
+                        <p><strong>Total de Assinaturas:</strong> ${signaturesData.length}</p>
+                        <table><thead>
+                            <tr><th>ID</th><th>Nome Completo</th><th>Endereço</th><th>Telefone</th></tr>
+                        </thead><tbody>
+                `;
+                signaturesData.forEach((sig, index) => {
+                    htmlString += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${sig.nome || ''}</td>
+                            <td>${sig.endereco || ''}</td>
+                            <td>${sig.telefone || ''}</td>
+                        </tr>
+                    `;
+                });
+                htmlString += `</tbody></table></body></html>`;
+
+                const link = document.createElement('a');
+                const blob = new Blob(['\ufeff', htmlString], {
+                    type: 'application/msword'
+                });
+                
+                link.href = URL.createObjectURL(blob);
+                const today = new Date();
+                const dateString = today.toISOString().slice(0, 10);
+                link.download = `abaixo-assinado-${dateString}.doc`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+        
+    });
+</script>
 </body>
 </html>
