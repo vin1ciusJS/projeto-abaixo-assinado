@@ -46,11 +46,11 @@
         <main class="main-content">
             <div class="main-header">
                 <h1>Relatório de Assinaturas</h1>
-                <div class="controls">
-                    <button id="load-button" class="admin-cta-button"><i class="fa-solid fa-sync"></i> Carregar Assinaturas</button>
-                    <button id="print-button" class="admin-cta-button secondary" style="display: none;"><i class="fa-solid fa-print"></i> Gerar PDF</button>
-                    <button id="word-button" class="admin-cta-button secondary" style="display: none;"><i class="fa-solid fa-file-word"></i> Gerar Word</button>
-                </div>
+            <div class="controls">
+                <button id="load-button" class="admin-cta-button"><i class="fa-solid fa-sync"></i> Carregar Assinaturas</button>
+                <button id="print-button" class="admin-cta-button secondary" style="display: none;"><i class="fa-solid fa-print"></i> Gerar PDF</button>
+                <button id="word-button" class="admin-cta-button secondary" style="display: none;"><i class="fa-solid fa-file-word"></i> Gerar Word</button>
+            </div>
             </div>
             <p id="status" class="status-text"></p>
             
@@ -113,7 +113,7 @@
 
             const loadButton = document.getElementById('load-button');
             const printButton = document.getElementById('print-button');
-            const wordButton = document.getElementById('word-button')
+            const wordButton = document.getElementById('word-button');
             const statusEl = document.getElementById('status');
             const tableBody = document.querySelector('#signatures-table tbody');
             const pdfTableContainer = document.getElementById('pdf-table-container');
@@ -148,6 +148,7 @@
                     
                     statusEl.textContent = `${signaturesData.length} assinaturas carregadas.`;
                     printButton.style.display = 'inline-flex';
+                    wordButton.style.display = 'inline-flex';
 
                 } catch (error) {
                     statusEl.textContent = `Erro: ${error.message}`;
